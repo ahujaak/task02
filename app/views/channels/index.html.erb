@@ -14,7 +14,7 @@
 			<ul>
 				<% channel.shows.each do |show| %>
 					<li> <%= show.name %>
-						<button onclick='addFavourite("#{show.id}")'> Add to Favourite </button>
+						<button onclick='addFavourite(<%= "#{show.id}" %>)'> Add to Favourite </button>
 					 </li>
 				<% end %>
 			</ul>
