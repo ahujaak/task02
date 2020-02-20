@@ -1,0 +1,23 @@
+<% if params[:commit] == "Search" %>
+	<h2> Search Results </h2>
+<% else %>
+	<h2> Channels </h2>
+<% end %>
+
+<% if @channels.present? %>
+	<% @channels.each do |channel| %>
+		<ul>
+			<li> <%= channel.name %> </li>
+		</ul>
+		<% unless params[:commit] == "Search" %>
+			<ul>
+				<% channel.shows.each do |show| %>
+					<li> <%= show.name %> </li>
+				<% end %>
+			</ul>
+		<% end %>
+	<% end %>
+<% else %>
+	No Channels or Shows found
+<% end %>
+
