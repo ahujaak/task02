@@ -1,0 +1,40 @@
+# docker-compose run web rm -rf /myapp/tmp/pids/server.pid
+
+version: "3"
+services:
+  redis:
+    image: redis
+    volumes:
+      - ./tmp/db:/var/lib/redis/data
+
+  db:
+    image: percona
+    ports:
+      - 3306:3306
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Test123#
+
+  app:
+    stdin_open: true
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      # - sidekiq
+
+  # sidekiq:
+  #   stdin_open: true
+  #   tty: true
+  #   build: .
+  #   command: bundle exec sidekiq
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - redis

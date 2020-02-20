@@ -1,0 +1,26 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+
+development:
+  <<: *default
+  database: tv_show_app_development
+  username: root
+  password: Test123#
+  host: db
+
+test:
+  <<: *default
+  database: tv_show_app_test
+  username: root
+  password: Test123#
+  host: db
+
+production:
+  <<: *default
+  database: tv_show_app_production
+  host: <%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
