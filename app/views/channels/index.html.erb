@@ -4,6 +4,7 @@
 	<h2> Channels </h2>
 <% end %>
 
+
 <% if @channels.present? %>
 	<% @channels.each do |channel| %>
 		<ul>
@@ -12,7 +13,9 @@
 		<% unless params[:commit] == "Search" %>
 			<ul>
 				<% channel.shows.each do |show| %>
-					<li> <%= show.name %> </li>
+					<li> <%= show.name %>
+						<button onclick='addFavourite("#{show.id}")'> Add to Favourite </button>
+					 </li>
 				<% end %>
 			</ul>
 		<% end %>
@@ -21,3 +24,17 @@
 	No Channels or Shows found
 <% end %>
 
+<script>
+	function addFavourite(show_id){
+		$.ajax({
+			type: 'POST',
+			url: "/add_to_favourite",
+			data: {
+    		show_id: show_id
+    	},
+    	dataType: 'JSON',
+			success: function(result){
+    		alert("Added to Favourite");
+  		}});
+	}
+</script>
